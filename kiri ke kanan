@@ -1,0 +1,28 @@
+int kiri=12;
+int tengah=11;
+int kanan=10; 
+void setup() {
+ 
+  pinMode(kiri, OUTPUT);
+  pinMode(tengah, OUTPUT);
+  pinMode(kanan, OUTPUT);
+}
+
+void loop() {
+ 
+  digitalWrite(kiri, HIGH); 
+  delay(300); 
+  digitalWrite(kiri, LOW); 
+  delay(300);
+
+  digitalWrite(tengah, HIGH);
+  delay(300);
+  digitalWrite(tengah, LOW);
+  delay(300);
+
+  digitalWrite(kanan, HIGH);
+  delay(300);
+  digitalWrite(kanan, LOW);
+  delay(300);
+
+}
