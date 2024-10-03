@@ -1,0 +1,119 @@
+// Pin LED
+int kiri = 12;
+int tengah = 11;
+int kanan = 10;
+
+// Pin tombol
+int tombolKondisi1 = 9;
+int tombolKondisi2 = 8;
+int tombolKondisi3 = 7;
+
+// Variabel untuk menyimpan kondisi
+int kondisi = 0;  // 0 = Tidak ada kondisi aktif
+
+void setup() {
+  // Inisialisasi pin LED sebagai output
+  pinMode(kiri, OUTPUT);
+  pinMode(tengah, OUTPUT);
+  pinMode(kanan, OUTPUT);
+  
+  // Inisialisasi pin tombol sebagai input dengan pull-up internal
+  pinMode(tombolKondisi1, INPUT_PULLUP);
+  pinMode(tombolKondisi2, INPUT_PULLUP);
+  pinMode(tombolKondisi3, INPUT_PULLUP);
+}
+
+void loop() {
+  // Membaca tombol untuk memilih kondisi secara langsung
+  if (digitalRead(tombolKondisi1) == LOW) {
+    kondisi = 1; // Kondisi 1: LED menyala dari kanan ke kiri
+  }
+  if (digitalRead(tombolKondisi2) == LOW) {
+    kondisi = 2; // Kondisi 2: LED menyala dari kiri ke kanan
+  }
+  if (digitalRead(tombolKondisi3) == LOW) {
+    kondisi = 3; // Kondisi 3: LED menyala bolak-balik
+  }
+
+  // Menjalankan kondisi sesuai pilihan
+  if (kondisi == 1) {
+    // Kondisi 1: LED menyala dari kanan ke kiri
+    digitalWrite(kanan, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(kanan, LOW);
+
+    digitalWrite(tengah, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(tengah, LOW);
+
+    digitalWrite(kiri, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(kiri, LOW);
+  } 
+  else if (kondisi == 2) {
+    // Kondisi 2: LED menyala dari kiri ke kanan
+    digitalWrite(kiri, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(kiri, LOW);
+
+    digitalWrite(tengah, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(tengah, LOW);
+
+    digitalWrite(kanan, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(kanan, LOW);
+  } 
+  else if (kondisi == 3) {
+    // Kondisi 3: LED menyala bolak-balik
+    // Dari kiri ke kanan
+    digitalWrite(kiri, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(kiri, LOW);
+
+    digitalWrite(tengah, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(tengah, LOW);
+
+    digitalWrite(kanan, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(kanan, LOW);
+
+    // Dari kanan ke kiri
+    digitalWrite(tengah, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(tengah, LOW);
+
+    digitalWrite(kiri, HIGH);
+    delay(300);
+    if (checkButtonPress()) return;
+    digitalWrite(kiri, LOW);
+  }
+}
+
+// Fungsi untuk memeriksa apakah tombol lain ditekan
+bool checkButtonPress() {
+  if (digitalRead(tombolKondisi1) == LOW) {
+    kondisi = 1;
+    return true; // Menghentikan loop dan beralih ke kondisi lain
+  }
+  if (digitalRead(tombolKondisi2) == LOW) {
+    kondisi = 2;
+    return true;
+  }
+  if (digitalRead(tombolKondisi3) == LOW) {
+    kondisi = 3;
+    return true;
+  }
+  return false; // Tidak ada tombol yang ditekan
+}
